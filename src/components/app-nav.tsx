@@ -126,17 +126,26 @@ export function AppNav({
         >
           <X className="h-[18px] w-[18px]" strokeWidth={1.8} />
         </button>
-        <span
-          className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-sm bg-brand text-[15px] font-bold text-brand-fg"
-          aria-hidden
-        >
-          {branding.name.charAt(0).toUpperCase()}
-        </span>
+        {/* Isotipo gráfico oficial de AgentiaMX */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/assets/img/logo.png"
+          alt={branding.name}
+          width={28}
+          height={28}
+          className="h-7 w-7 shrink-0 object-contain"
+        />
         <span className="min-w-0">
-          <span className="block truncate text-[16px] font-[650] leading-tight tracking-tight">
-            {branding.name}
+          <span className="block truncate text-[16px] font-bold leading-tight tracking-tight text-foreground">
+            {branding.name === "Agentia CRM" ? (
+              <>
+                agentia<span className="text-brand">CRM</span>
+              </>
+            ) : (
+              branding.name
+            )}
           </span>
-          <span className="block text-[11px] text-text-3">CRM · WhatsApp</span>
+          <span className="block text-[11px] font-medium text-text-3">Agentes de IA · WhatsApp</span>
         </span>
       </div>
 

@@ -14,67 +14,67 @@
   :root {
     color-scheme: light;
 
-    /* Neutros (valores exactos del handoff) */
+    /* Neutros AgentiaMX */
     --bg: #ffffff;
-    --bg-subtle: #fbfbfc;
-    --bg-panel: #f8f8f9;
-    --bg-hover: #f4f4f5;
-    --text: #1a1a1e;
-    --text-2: #56565e;
-    --text-3: #8c8c95;
-    --text-4: #aeaeb6;
-    --border: #ecedf0;
-    --border-strong: #e0e1e6;
+    --bg-subtle: #f6fafb;
+    --bg-panel: #f0f5f7;
+    --bg-hover: #e8eff3;
+    --text: #012b51;
+    --text-2: #334e68;
+    --text-3: #627d98;
+    --text-4: #9fb3c8;
+    --border: #e2ebf0;
+    --border-strong: #cbd9e2;
 
     /* Chat */
-    --chat-bg: #f4f5f7;
-    --bubble-out: #f2f5f8;
-    --bubble-out-text: #33414f;
+    --chat-bg: #f0f4f7;
+    --bubble-out: #d6f4ec;
+    --bubble-out-text: #084c3c;
 
-    /* Acento (default: azul acero apagado; white-label lo sobreescribe) */
-    --accent: #3f5972;
-    --accent-hover: #334a60;
-    --accent-soft: #dde5ee;
-    --accent-tint: #f3f6f9;
-    --accent-text: #2b4056;
-    --accent-fg: #ffffff;
+    /* Acento AgentiaMX (Menta Tech #1eb894) */
+    --accent: #1eb894;
+    --accent-hover: #179678;
+    --accent-soft: #d6f4ec;
+    --accent-tint: #eef9f6;
+    --accent-text: #0e634f;
+    --accent-fg: #012b51;
     /* Velo translúcido ENCIMA del acento (contadores dentro de un chip). */
-    --accent-veil: rgba(255, 255, 255, 0.2);
+    --accent-veil: rgba(1, 43, 81, 0.15);
     --bg-active: var(--accent-tint);
 
     /* Estado: color puro + tríada (tint = fondo, soft = borde, text = tinta) */
-    --success: #5f8f74;
-    --success-tint: #eff7f1;
-    --success-soft: #d8e8dd;
-    --success-text: #3f6b52;
+    --success: #00a884;
+    --success-tint: #e6f7f3;
+    --success-soft: #b3e8dd;
+    --success-text: #006e56;
 
-    --warning: #b08b5e;
-    --warning-tint: #faf7f0;
-    --warning-soft: #ece2cf;
-    --warning-text: #8a6d3b;
+    --warning: #d97706;
+    --warning-tint: #fef3c7;
+    --warning-soft: #fde68a;
+    --warning-text: #92400e;
 
-    --danger: #a2504c;
-    --danger-tint: #faf1f0;
-    --danger-soft: #ecd4d2;
-    --danger-text: #a2504c;
+    --danger: #ef4444;
+    --danger-tint: #fee2e2;
+    --danger-soft: #fecaca;
+    --danger-text: #991b1b;
     --danger-fg: #ffffff;
 
-    --info: #4a6c96;
-    --info-tint: #f3f7fc;
-    --info-soft: #d7e3f4;
-    --info-text: #3c5a82;
+    --info: #086b89;
+    --info-tint: #e0f2fe;
+    --info-soft: #bae6fd;
+    --info-text: #075985;
 
     /* Superficies auxiliares */
-    --overlay: rgba(0, 0, 0, 0.6);
+    --overlay: rgba(1, 43, 81, 0.6);
     --knob: #ffffff;
 
     /* Radios y sombras */
-    --radius-sm: 7px;
+    --radius-sm: 6px;
     --radius: 10px;
     --radius-lg: 14px;
-    --shadow-sm: 0 1px 2px rgba(20, 20, 30, 0.05);
-    --shadow-md: 0 6px 20px -6px rgba(20, 20, 35, 0.12);
-    --shadow-pop: 0 12px 32px -8px rgba(20, 20, 35, 0.22);
+    --shadow-sm: 0 1px 2px rgba(1, 43, 81, 0.06);
+    --shadow-md: 0 6px 20px -6px rgba(1, 43, 81, 0.12);
+    --shadow-pop: 0 12px 32px -8px rgba(1, 43, 81, 0.20);
 
     /* Densidad de filas de conversación */
     --row-py: 11px;
@@ -83,55 +83,55 @@
   :root[data-theme="dark"] {
     color-scheme: dark;
 
-    /* Neutros invertidos: el panel lateral queda por DEBAJO del contenido */
-    --bg: #101115;
-    --bg-subtle: #0b0c0f;
-    --bg-panel: #17181d;
-    --bg-hover: #1e1f26;
-    --text: #eceef2;
-    --text-2: #a8abb5;
-    --text-3: #7c7f8a;
-    --text-4: #5c5f69;
-    --border: #23242b;
-    --border-strong: #31333d;
+    /* Neutros invertidos (Agentia / WhatsApp Dark) */
+    --bg: #0b141a;
+    --bg-subtle: #111b21;
+    --bg-panel: #1f2c34;
+    --bg-hover: #2a3942;
+    --text: #e9edef;
+    --text-2: #8696a0;
+    --text-3: #667781;
+    --text-4: #4b565c;
+    --border: #222d34;
+    --border-strong: #374248;
 
     /* Chat */
-    --chat-bg: #0b0c0f;
-    --bubble-out: #1d2a36;
-    --bubble-out-text: #d6e2ee;
+    --chat-bg: #0b141a;
+    --bubble-out: #005c4b;
+    --bubble-out-text: #e9edef;
 
-    /* Acento: el white-label lo recalcula para fondo oscuro */
-    --accent: #7f9cba;
-    --accent-hover: #96aeca;
-    --accent-soft: #2a3846;
-    --accent-tint: #1a212a;
-    --accent-text: #a9bfd6;
-    --accent-fg: #0f1419;
+    /* Acento sobre fondo oscuro */
+    --accent: #1eb894;
+    --accent-hover: #28d4ab;
+    --accent-soft: #133830;
+    --accent-tint: #0d241f;
+    --accent-text: #70e4c8;
+    --accent-fg: #0b141a;
     --accent-veil: rgba(0, 0, 0, 0.22);
 
     /* Estado sobre fondo oscuro */
-    --success: #7fb894;
-    --success-tint: #15221a;
-    --success-soft: #263b2d;
-    --success-text: #8cc4a1;
+    --success: #00a884;
+    --success-tint: #0b241e;
+    --success-soft: #164238;
+    --success-text: #70e4c8;
 
-    --warning: #d0a86f;
-    --warning-tint: #241f16;
-    --warning-soft: #3d3421;
-    --warning-text: #d9b47c;
+    --warning: #f59e0b;
+    --warning-tint: #261e0b;
+    --warning-soft: #453310;
+    --warning-text: #fcd34d;
 
-    --danger: #d1706c;
-    --danger-tint: #261817;
-    --danger-soft: #422726;
-    --danger-text: #e09490;
+    --danger: #f87171;
+    --danger-tint: #271414;
+    --danger-soft: #4a1f1f;
+    --danger-text: #fca5a5;
     --danger-fg: #1b1113;
 
-    --info: #7fa3cd;
-    --info-tint: #151d27;
-    --info-soft: #263749;
-    --info-text: #a2c0e2;
+    --info: #38bdf8;
+    --info-tint: #0c2233;
+    --info-soft: #133c57;
+    --info-text: #7dd3fc;
 
-    --overlay: rgba(0, 0, 0, 0.72);
+    --overlay: rgba(0, 0, 0, 0.75);
     --knob: #d9dae1;
 
     /* Sombras: sobre oscuro necesitan más negro para leerse */

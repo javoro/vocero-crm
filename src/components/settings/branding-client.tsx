@@ -15,7 +15,7 @@ export function BrandingClient() {
   const router = useRouter();
   const mode = useResolvedTheme();
   const [name, setName] = useState("");
-  const [accent, setAccent] = useState("#3f5972");
+  const [accent, setAccent] = useState("#1eb894");
   const [currency, setCurrency] = useState<Currency>(DEFAULT_CURRENCY);
   const [loaded, setLoaded] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -83,7 +83,7 @@ export function BrandingClient() {
               maxLength={30}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Vocero"
+              placeholder="Agentia CRM"
               className="max-w-xs"
             />
           </div>
