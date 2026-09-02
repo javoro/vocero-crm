@@ -1,3 +1,12 @@
 {
-  "mcpServers": {}
+  "mcpServers": {
+    "coolify": {
+      "command": "npx",
+      "args": ["-y", "@masonator/coolify-mcp"],
+      "env": {
+        "COOLIFY_BASE_URL": "https://coolify.agentiamx-crm.tech",
+        "COOLIFY_ACCESS_TOKEN": "1|QaO1b54h2Q8QggRdcJrJqM7eFmp97DpciPUf52Xs274b838f"
+      }
+    }
+  }
 }

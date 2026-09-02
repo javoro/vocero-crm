@@ -59,15 +59,23 @@ export function AgentClient() {
     );
   }
 
-  async function saveProfile(patch: Partial<Profile>) {
-    await fetch("/api/agent/profile", {
-      method: "PUT",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(patch),
-    }).catch(() => null);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
-    void refetch();
+  async function saveProfile(patch: Partial<Profile>): Promise<boolean> {
+    try {
+      const res = await fetch("/api/agent/profile", {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(patch),
+      });
+      if (res.ok) {
+        setSaved(true);
+        setTimeout(() => setSaved(false), 2500);
+        void refetch();
+        return true;
+      }
+      return false;
+    } catch {
+      return false;
+    }
   }
 
   return (
@@ -75,7 +83,7 @@ export function AgentClient() {
       <header className="flex flex-wrap items-center justify-between gap-2 border-b px-4 py-3 sm:px-6 sm:py-4">
         <h2 className="font-semibold">Agente de IA</h2>
         <div className="flex items-center gap-3">
-          {saved && <span className="text-xs text-primary">Guardado ✓</span>}
+          {saved && <span className="text-xs font-semibold text-primary">Guardado ✓</span>}
           <span className="text-sm text-muted-foreground">
             {profile.enabled ? "Encendido" : "Apagado"}
           </span>
@@ -124,10 +132,29 @@ function ProfileSection({
   onSave,
 }: {
   profile: Profile;
-  onSave: (patch: Partial<Profile>) => Promise<void>;
+  onSave: (patch: Partial<Profile>) => Promise<boolean>;
 }) {
   const [form, setForm] = useState(profile);
+  const [saving, setSaving] = useState(false);
+  const [savedSuccess, setSavedSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   useEffect(() => setForm(profile), [profile]);
+
+  async function handleSubmit() {
+    setSaving(true);
+    setErrorMessage(null);
+    setSavedSuccess(false);
+
+    const ok = await onSave(form);
+    setSaving(false);
+    if (ok) {
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 3000);
+    } else {
+      setErrorMessage("No se pudo guardar. Verifica que el nombre no esté vacío.");
+    }
+  }
 
   return (
     <Card>
@@ -142,6 +169,7 @@ function ProfileSection({
           <Label htmlFor="agent-name">Nombre del agente</Label>
           <Input
             id="agent-name"
+            placeholder="Agentia | Asistente de Operaciones"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
@@ -159,7 +187,7 @@ function ProfileSection({
           <Label htmlFor="agent-instructions">Instrucciones</Label>
           <Textarea
             id="agent-instructions"
-            rows={5}
+            rows={6}
             placeholder="Qué debe y no debe hacer el agente…"
             value={form.instructions ?? ""}
             onChange={(e) => setForm({ ...form, instructions: e.target.value })}
@@ -169,7 +197,7 @@ function ProfileSection({
           <Label htmlFor="agent-escalation">Reglas de escalado</Label>
           <Textarea
             id="agent-escalation"
-            rows={3}
+            rows={4}
             placeholder="Cuándo pasar la conversación a un humano…"
             value={form.escalationRules ?? ""}
             onChange={(e) => setForm({ ...form, escalationRules: e.target.value })}
@@ -184,7 +212,21 @@ function ProfileSection({
             onChange={(e) => setForm({ ...form, greeting: e.target.value })}
           />
         </div>
-        <Button onClick={() => void onSave(form)}>Guardar comportamiento</Button>
+
+        {errorMessage && (
+          <p className="text-sm font-medium text-destructive">{errorMessage}</p>
+        )}
+
+        <div className="flex items-center gap-3">
+          <Button onClick={handleSubmit} disabled={saving}>
+            {saving ? "Guardando…" : "Guardar comportamiento"}
+          </Button>
+          {savedSuccess && (
+            <span className="text-sm font-medium text-primary">
+              ¡Comportamiento guardado correctamente! ✓
+            </span>
+          )}
+        </div>
       </CardContent>
     </Card>
   );
