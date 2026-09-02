@@ -4,11 +4,12 @@ import { schema } from "@/lib/db";
 import { newId } from "@/lib/db/ids";
 
 /**
- * Negocio de demostración "Ferretería El Martillo" (FR-075).
+/**
+ * Negocio de demostración "AgentiaMX — Agentes de IA & Automatización" (FR-075).
  * Idempotente: borra los datos demo previos de la organización (scoped por
- * los teléfonos demo) y reinserta. El KB queda lleno EXCEPTO garantías y
- * devoluciones — hueco INTENCIONAL para que el Laboratorio encuentre algo
- * real en la primera corrida.
+ * los teléfonos demo) y reinserta. El KB queda lleno EXCEPTO servicios de desarrollo
+ * de apps móviles / marketing tradicional — hueco INTENCIONAL para que el Laboratorio
+ * encuentre algo real en la primera corrida.
  */
 
 type Db = ReturnType<typeof getDb>;
@@ -24,47 +25,47 @@ const DEMO_CONTACTS: {
 }[] = [
   {
     phone: "5215612340001",
-    name: "María Fernanda López",
+    name: "Lic. María Fernanda López",
     stage: "Interesado",
-    notes: "Remodela su cocina; busca herramienta eléctrica.",
+    notes: "Directora en Grupo Retail MX. Busca automatizar cotizaciones en WhatsApp.",
     thread: [
-      { dir: "in", text: "Hola, ¿tienen taladros inalámbricos?", hoursAgo: 5 },
-      { dir: "out", text: "¡Hola María! Sí: tenemos el Truper 20V en $1,899 MXN y el DeWalt 20V MAX en $3,450 MXN, ambos con batería incluida.", hoursAgo: 5, ai: true },
-      { dir: "in", text: "¿El Truper incluye brocas?", hoursAgo: 4 },
-      { dir: "out", text: "Incluye un juego básico de 5 brocas para concreto y madera. Si necesitas más, el juego de 30 piezas está en $349 MXN.", hoursAgo: 4, ai: true },
-      { dir: "in", text: "Perfecto, me interesa el Truper. ¿Me lo apartan?", hoursAgo: 3 },
+      { dir: "in", text: "Hola, ¿integran agentes de IA para WhatsApp y atención a clientes?", hoursAgo: 5 },
+      { dir: "out", text: "¡Hola María Fernanda! Sí: diseñamos e integramos agentes de IA a la medida para WhatsApp que cotizan, atienden 24/7 y se conectan a tu CRM y catálogos.", hoursAgo: 5, ai: true },
+      { dir: "in", text: "¿El agente puede consultar nuestra base de datos de inventario en tiempo real?", hoursAgo: 4 },
+      { dir: "out", text: "Totalmente. Lo conectamos vía API a tu base de datos o ERP para responder existencias y precios al instante. Además, toda tu información se queda en tu propia infraestructura.", hoursAgo: 4, ai: true },
+      { dir: "in", text: "Me interesa bastante. ¿Podemos agendar una llamada de diagnóstico de 15 minutos?", hoursAgo: 3 },
     ],
   },
   {
     phone: "5215612340002",
-    name: "Carlos Ramírez",
+    name: "Dr. Carlos Ramírez",
     stage: "En conversación",
     thread: [
-      { dir: "in", text: "Buenas, ¿cuánto el bulto de cemento gris?", hoursAgo: 8 },
-      { dir: "out", text: "¡Hola Carlos! El bulto de 50 kg está en $245 MXN. Por 10 o más te queda en $232 MXN cada uno.", hoursAgo: 8, ai: true },
-      { dir: "in", text: "Ocupo 15 bultos, ¿hacen entrega en Naucalpan?", hoursAgo: 7 },
-      { dir: "out", text: "Sí, entregamos en toda la zona. El flete es de $150 MXN y llega el mismo día si confirmas antes de la 1 pm. Total: 15 × $232 + $150 = $3,630 MXN.", hoursAgo: 7, ai: true },
+      { dir: "in", text: "Buenas tardes, ¿cómo funciona la integración con Google Calendar?", hoursAgo: 8 },
+      { dir: "out", text: "¡Hola Dr. Carlos! El agente sincroniza disponibilidad en tiempo real con Google Calendar: el paciente elige horario por WhatsApp y el agente confirma la cita automáticamente.", hoursAgo: 8, ai: true },
+      { dir: "in", text: "Excelente, ¿y envía recordatorios antes de la consulta para reducir cancelaciones?", hoursAgo: 7 },
+      { dir: "out", text: "Sí, programa recordatorios automáticos 24 horas y 2 horas antes con opción de confirmar o reagendar con un solo clic.", hoursAgo: 7, ai: true },
     ],
   },
   {
     phone: "5215612340003",
-    name: "Lupita Hernández",
+    name: "C.P. Lupita Hernández",
     stage: "Cliente",
-    notes: "Compra recurrente para su taller de carpintería.",
+    notes: "Despacho Contable Hernández & Asociados. Agente activo en producción.",
     thread: [
-      { dir: "in", text: "Hola de nuevo, ya me quedé sin barniz 😅", hoursAgo: 30 },
-      { dir: "out", text: "¡Hola Lupita! Te apartamos 2 litros del barniz marino que siempre llevas: $520 MXN. ¿Te los mando con tu pedido de lijas?", hoursAgo: 30, ai: true },
-      { dir: "in", text: "Sí porfa, junto todo en un solo envío", hoursAgo: 29 },
-      { dir: "out", text: "Listo, sale hoy mismo. Total: $780 MXN con las lijas. ¡Gracias por tu compra!", hoursAgo: 29, ai: true },
+      { dir: "in", text: "Hola, el agente está atendiendo excelente las dudas fiscales de los clientes 👏", hoursAgo: 30 },
+      { dir: "out", text: "¡Qué gran noticia Lupita! Nos alegra mucho. ¿Les gustaría activar la recepción automática de constancias de situación fiscal para el timbrado?", hoursAgo: 30, ai: true },
+      { dir: "in", text: "Sí por favor, agrégalo a nuestro flujo del agente", hoursAgo: 29 },
+      { dir: "out", text: "Listo, ya quedó habilitado en el flujo de recepción. ¡Gracias por confiar en AgentiaMX!", hoursAgo: 29, ai: true },
     ],
   },
   {
     phone: "5215612340004",
-    name: "Jorge Castillo",
+    name: "Ing. Jorge Castillo",
     stage: "Nuevo",
     thread: [
-      { dir: "in", text: "ke onda, tienen pintura vinilica blanka de 19 lts?", hoursAgo: 2 },
-      { dir: "out", text: "¡Qué tal Jorge! Sí: la cubeta de 19 L de vinílica blanca está en $1,150 MXN (rinde ~90 m²). ¿La quieres mate o satinada?", hoursAgo: 2, ai: true },
+      { dir: "in", text: "ke onda, si jala un agente de ia para una refaccionaria industrial?", hoursAgo: 2 },
+      { dir: "out", text: "¡Qué tal Jorge! Claro que sí: el agente puede buscar por número de parte, compatibilidad de refacciones y entregar cotizaciones en PDF o texto en segundos.", hoursAgo: 2, ai: true },
     ],
   },
   {
@@ -72,23 +73,23 @@ const DEMO_CONTACTS: {
     name: "Ana Sofía Torres",
     stage: "Interesado",
     thread: [
-      { dir: "in", text: "Hola, vi su anuncio. ¿Manejan material eléctrico?", hoursAgo: 12 },
-      { dir: "out", text: "¡Hola Ana! Sí: cable, contactos, pastillas y centros de carga. ¿Qué necesitas para tu proyecto?", hoursAgo: 12, ai: true },
-      { dir: "in", text: "Necesito 100 m de cable calibre 12 y 10 contactos dobles", hoursAgo: 11 },
-      { dir: "out", text: "Te cotizo: rollo de 100 m cal. 12 THW $1,890 MXN + 10 contactos dobles Volteck $35 c/u = $2,240 MXN. ¿Te lo preparo?", hoursAgo: 11, ai: true },
-      { dir: "in", text: "Déjame confirmar con el electricista y te digo", hoursAgo: 10 },
+      { dir: "in", text: "Hola, vi su web agentiamx.com. ¿Manejan proyectos para inmobiliarias?", hoursAgo: 12 },
+      { dir: "out", text: "¡Hola Ana Sofía! Sí: implementamos agentes que califican prospectos de vivienda, envían fichas técnicas con fotos y agendan visitas con tus asesores.", hoursAgo: 12, ai: true },
+      { dir: "in", text: "¿Y qué modelos de IA utilizan para responder?", hoursAgo: 11 },
+      { dir: "out", text: "Trabajamos con modelos de última generación (Claude 3.7, DeepSeek V3, GPT-4o) optimizados para velocidad y precisión en español.", hoursAgo: 11, ai: true },
+      { dir: "in", text: "Déjame presentárselo a la gerencia comercial para coordinar una demo", hoursAgo: 10 },
     ],
   },
   {
     phone: "5215612340006",
     name: "Roberto Mendoza",
     stage: "Perdido",
-    notes: "Buscaba precio de mayoreo que no podemos igualar.",
+    notes: "Buscaba un plugin gratuito de WordPress sin soporte ni servidores dedicados.",
     thread: [
-      { dir: "in", text: "¿A cómo la tonelada de varilla 3/8?", hoursAgo: 96 },
-      { dir: "out", text: "Hola Roberto: la tonelada de varilla 3/8 está en $17,800 MXN. ¿Para cuándo la necesitas?", hoursAgo: 96, ai: true },
-      { dir: "in", text: "Uy no, en otro lado me la dan en 16", hoursAgo: 95 },
-      { dir: "out", text: "Entiendo. Ese precio no lo alcanzamos, pero si tu proveedor queda mal aquí estamos con entrega el mismo día. ¡Éxito con la obra!", hoursAgo: 95, ai: true },
+      { dir: "in", text: "¿Tienen algún bot gratis para probar?", hoursAgo: 96 },
+      { dir: "out", text: "Hola Roberto. En AgentiaMX diseñamos soluciones empresariales a la medida con infraestructura dedicada y soporte continuo. Te podemos agendar un diagnóstico de 15 minutos sin costo.", hoursAgo: 96, ai: true },
+      { dir: "in", text: "No gracias, busco algo gratis en internet", hoursAgo: 95 },
+      { dir: "out", text: "Comprendemos. Si más adelante requieres una solución robusta y soberana para tu negocio, con gusto te apoyamos. ¡Mucho éxito!", hoursAgo: 95, ai: true },
     ],
   },
   {
@@ -96,9 +97,9 @@ const DEMO_CONTACTS: {
     name: "Paty Domínguez",
     stage: "En conversación",
     thread: [
-      { dir: "in", text: "Hola, ¿tienen impermeabilizante? Se me llueve la azotea 😩", hoursAgo: 26 },
-      { dir: "out", text: "¡Hola Paty! Claro: el impermeabilizante acrílico 5 años (cubeta 19 L) está en $1,680 MXN, cubre ~40 m². ¿De cuántos metros es tu azotea?", hoursAgo: 26, ai: true },
-      { dir: "in", text: "Como de 60 metros, ¿me alcanzaría con dos?", hoursAgo: 25 },
+      { dir: "in", text: "Hola, me preocupa la privacidad de los datos de mis clientes corporativos 🔐", hoursAgo: 26 },
+      { dir: "out", text: "¡Hola Paty! Es uno de nuestros mayores pilares: no somos una plataforma multi-tenant compartida. Tu agente y su base de datos se despliegan en tu propia infraestructura o servidor privado.", hoursAgo: 26, ai: true },
+      { dir: "in", text: "Eso es justo lo que buscábamos por temas de cumplimiento. ¿Emiten factura con IVA?", hoursAgo: 25 },
     ],
   },
   {
@@ -106,10 +107,10 @@ const DEMO_CONTACTS: {
     name: "Don Chuy Aguilar",
     stage: "Cliente",
     thread: [
-      { dir: "in", text: "Joven, mándeme la lista de lo de siempre para la cuadrilla", hoursAgo: 50 },
-      { dir: "out", text: "¡Con gusto Don Chuy! Su pedido habitual: 5 bultos de cemento, 2 de mortero, 1 rollo de alambre recocido y 3 kg de clavo. Total: $1,585 MXN. ¿Se lo mandamos a la obra de Av. Juárez?", hoursAgo: 50, ai: true },
-      { dir: "in", text: "Ándele, ahí mismo. Se paga contra entrega como siempre", hoursAgo: 49 },
-      { dir: "out", text: "Perfecto, sale en la camioneta de las 4. ¡Gracias Don Chuy!", hoursAgo: 49, ai: true },
+      { dir: "in", text: "Buenas tardes equipo Agentia, queremos renovar el plan de mantenimiento anual", hoursAgo: 50 },
+      { dir: "out", text: "¡Qué tal Don Chuy! Con mucho gusto. Le generamos la cotización de renovación con el 10% de descuento por anualidad anticipada. ¿Se la envío al correo registrado?", hoursAgo: 50, ai: true },
+      { dir: "in", text: "Sí por favor, para pasarla a tesorería de inmediato", hoursAgo: 49 },
+      { dir: "out", text: "Enviada a su correo. ¡Un gusto seguir colaborando con su empresa!", hoursAgo: 49, ai: true },
     ],
   },
 ];
@@ -118,16 +119,51 @@ const DEMO_KB: { kind: "qa" | "block"; question?: string; answer?: string; conte
   {
     kind: "block",
     content:
-      "Ferretería El Martillo — ferretería familiar con 20 años en la colonia Centro. Vendemos herramienta manual y eléctrica, material de construcción, pintura, plomería y material eléctrico. Atendemos a público general, maestros de obra y talleres.",
+      "AgentiaMX (agentiamx.com) — Firma de consultoría e integración de Inteligencia Artificial para empresas mexicanas. Diseñamos agentes de IA que atienden, cotizan y dan seguimiento por WhatsApp 24/7. Operamos con soberanía de datos: cada empresa mantiene el control total de sus servidores, modelos y datos sin depender de cajas negras.",
   },
-  { kind: "qa", question: "¿Cuál es el horario?", answer: "Lunes a sábado de 8:00 a 19:00 y domingos de 9:00 a 14:00." },
-  { kind: "qa", question: "¿Dónde están ubicados?", answer: "Av. Hidalgo 245, colonia Centro. Hay estacionamiento gratuito para clientes en la calle lateral." },
-  { kind: "qa", question: "¿Hacen envíos a domicilio?", answer: "Sí: entrega el mismo día en la zona si confirmas antes de la 1 pm. Flete local $150 MXN; gratis en compras mayores a $3,000 MXN." },
-  { kind: "qa", question: "¿Qué métodos de pago aceptan?", answer: "Efectivo, tarjeta (crédito/débito), transferencia SPEI y pago contra entrega en pedidos locales." },
-  { kind: "qa", question: "¿Dan factura?", answer: "Sí, facturamos el mismo día. Envíanos tu constancia de situación fiscal y el ticket de compra." },
-  { kind: "qa", question: "¿Tienen precios de mayoreo?", answer: "Sí: en cemento, mortero y varilla hay precio especial a partir de 10 unidades; en pintura a partir de 5 cubetas. Pide tu cotización por WhatsApp." },
-  { kind: "qa", question: "¿Qué marcas de herramienta manejan?", answer: "Truper, Pretul, DeWalt, Makita y Ryobi en eléctrica; Volteck y Condulac en material eléctrico; Comex y Berel en pintura." },
-  // HUECO INTENCIONAL: nada sobre garantías ni devoluciones (lo encuentra el Laboratorio).
+  {
+    kind: "qa",
+    question: "¿Cuál es el proceso de implementación de un agente?",
+    answer:
+      "Consta de 3 pasos: 1. Diagnóstico (llamada de 15 min para analizar tus procesos y preguntas frecuentes), 2. Diseño y entrenamiento (ajustado a tu tono de marca y flujos), 3. Lanzamiento acompañado (conexión a WhatsApp oficial, validación y soporte continuo).",
+  },
+  {
+    kind: "qa",
+    question: "¿Dónde se guardan mis datos y conversaciones?",
+    answer:
+      "En tu propia infraestructura o servidor VPS privado. AgentiaMX respeta la soberanía de tus datos: no retenemos, compartimos ni comercializamos la información de tus clientes con terceros.",
+  },
+  {
+    kind: "qa",
+    question: "¿Cuánto cuesta implementar un agente de IA?",
+    answer:
+      "Cada solución se diseña a la medida según los canales, bases de datos y herramientas a integrar (CRM, inventarios, calendarios). En una llamada de 15 minutos diagnosticamos tu caso y te entregamos una propuesta clara sin compromiso.",
+  },
+  {
+    kind: "qa",
+    question: "¿Qué métodos de pago y facturación manejan?",
+    answer:
+      "Aceptamos transferencia bancaria SPEI, tarjetas de crédito/débito empresariales y emitimos facturas fiscales mexicanas (CFDI) con IVA desglosado.",
+  },
+  {
+    kind: "qa",
+    question: "¿Funciona con mi número actual de WhatsApp?",
+    answer:
+      "Sí: utilizamos la API oficial de WhatsApp Cloud de Meta sobre tu número corporativo actual o uno nuevo exclusivo para el agente.",
+  },
+  {
+    kind: "qa",
+    question: "¿Qué pasa si el agente no sabe responder algo o piden hablar con una persona?",
+    answer:
+      "El agente cuenta con reglas de escalamiento inteligente que transfieren la conversación en tiempo real a tu equipo humano, preservando todo el historial del cliente.",
+  },
+  {
+    kind: "qa",
+    question: "¿Dónde están ubicados y cuál es su horario de atención?",
+    answer:
+      "Estamos en Sinaloa, México. Atención comercial de lunes a viernes de 9:00 a 18:00 (hora del Pacífico) y soporte para agentes en producción 24/7 vía WhatsApp y contacto@agentiamx.com.",
+  },
+  // HUECO INTENCIONAL: nada sobre desarrollo de apps móviles nativas o marketing de influencers (lo encuentra el Laboratorio).
 ];
 
 export async function seedDemo(
@@ -255,13 +291,13 @@ export async function seedDemo(
   await db
     .update(schema.agentProfile)
     .set({
-      name: "Martillito",
-      tone: "Cercano y práctico, de ferretería de confianza. Tutea al cliente.",
+      name: "Agentia | Asistente de Operaciones",
+      tone: "Profesional, ágil y cercano. Español de México comercial. Respuestas directas y enfocadas en valor de negocio.",
       instructions:
-        "Ayuda a cotizar y cerrar ventas. Da precios en MXN solo si están en el conocimiento. Si piden mayoreo, menciona los mínimos. Nunca inventes existencias.",
+        "Ayuda a directores y líderes comerciales a entender el valor de los agentes de IA para su empresa. Califica el interés y promueve la llamada de diagnóstico de 15 minutos. Resalta la soberanía de datos de AgentiaMX.",
       escalationRules:
-        "Escala a un humano si piden factura con datos fiscales complejos, si hay una queja de producto dañado o si lo piden explícitamente.",
-      greeting: "¡Hola! Soy Martillito, el asistente de Ferretería El Martillo 🔨",
+        "Escala a un consultor humano si solicitan contratos formales, cotizaciones firmadas a la medida, si hay un problema técnico urgente o si piden hablar con una persona.",
+      greeting: "¡Hola! 👋 Te comunicas a AgentiaMX. Diseñamos e integramos agentes de IA para WhatsApp y procesos de negocio. ¿En qué proceso de tu empresa te gustaría implementar IA?",
       updatedAt: new Date(),
     })
     .where(eq(schema.agentProfile.organizationId, organizationId));
@@ -287,10 +323,10 @@ export async function seedDemo(
       veredicto: "verde",
       hallazgos: [],
       transcript: [
-        { role: "cliente", text: "¿Tienen taladros inalámbricos disponibles?" },
-        { role: "agente", text: "¡Sí! Truper 20V en $1,899 MXN y DeWalt 20V MAX en $3,450 MXN." },
-        { role: "cliente", text: "Me convence, lo compro. ¿Cómo pago?" },
-        { role: "agente", text: "Aceptamos efectivo, tarjeta, SPEI o contra entrega. Te lo aparto ahora mismo." },
+        { role: "cliente", text: "¿Integran agentes de IA para atención y cotizaciones en WhatsApp?" },
+        { role: "agente", text: "¡Hola! Sí: diseñamos e integramos agentes de IA a la medida para WhatsApp que cotizan, atienden 24/7 y se conectan a tu CRM y catálogos." },
+        { role: "cliente", text: "Me parece excelente, ¿cómo agendamos la llamada de diagnóstico de 15 minutos?" },
+        { role: "agente", text: "Con gusto: puedes agendar tu llamada directamente o compartirme tu horario disponible para confirmártela en este momento." },
       ],
     },
     {
@@ -298,8 +334,8 @@ export async function seedDemo(
       veredicto: "verde",
       hallazgos: [],
       transcript: [
-        { role: "cliente", text: "¿Qué precio tiene el martillo?" },
-        { role: "agente", text: "Tenemos varios; el más pedido es el Truper de uña. ¿Te confirmo precio y existencia con el equipo?" },
+        { role: "cliente", text: "¿Cuánto cuesta implementar un agente de IA?" },
+        { role: "agente", text: "Cada solución se diseña a la medida según los canales y herramientas a integrar. En una breve llamada de 15 min diagnosticamos tu caso y te entregamos una propuesta clara sin compromiso." },
       ],
     },
     {
@@ -309,12 +345,12 @@ export async function seedDemo(
         {
           tipo: "tono",
           evidencia:
-            "El agente respondió correcto pero algo frío ante 'es una porquería'; faltó empatizar antes de escalar.",
+            "El agente respondió de forma correcta pero un poco formal ante la molestia del cliente; se recomienda empatizar con la urgencia del canal antes de escalar.",
         },
       ],
       transcript: [
-        { role: "cliente", text: "Compré una lijadora la semana pasada y ya no prende, es una porquería" },
-        { role: "agente", text: "Lamento el problema. Paso tu caso a un compañero del equipo para resolverlo." },
+        { role: "cliente", text: "Configuré mi webhook de WhatsApp en Meta y no me están llegando los mensajes, es el colmo" },
+        { role: "agente", text: "Lamento el inconveniente con tu webhook. En este momento paso tu caso al equipo técnico para revisarlo de inmediato." },
       ],
     },
     {
@@ -324,17 +360,17 @@ export async function seedDemo(
         {
           tipo: "fuera_de_kb",
           evidencia:
-            "El cliente preguntó por garantías y devoluciones y el conocimiento no lo cubre.",
+            "El cliente preguntó por desarrollo de apps móviles nativas y campañas de marketing tradicional, temas que no forman parte de la Knowledge Base.",
           sugerencia: {
-            pregunta: "¿Cuál es la política de garantías y devoluciones?",
+            pregunta: "¿Desarrollan aplicaciones móviles nativas o campañas publicitarias?",
             respuesta:
-              "Aceptamos devoluciones dentro de los 30 días con ticket de compra; la garantía depende del fabricante.",
+              "En AgentiaMX nos especializamos exclusivamente en agentes de IA y automatizaciones sobre canales existentes (WhatsApp, CRM, APIs). No desarrollamos apps móviles nativas ni manejamos pauta publicitaria.",
           },
         },
       ],
       transcript: [
-        { role: "cliente", text: "¿Cuál es su política de garantías y devoluciones?" },
-        { role: "agente", text: "Déjame confirmarlo con el equipo y te digo en un momento." },
+        { role: "cliente", text: "¿Ustedes desarrollan aplicaciones móviles nativas para iOS y Android en Swift?" },
+        { role: "agente", text: "Déjame confirmarlo con nuestro equipo y te comparto la información en un momento." },
       ],
     },
     {
@@ -342,7 +378,7 @@ export async function seedDemo(
       veredicto: "verde",
       hallazgos: [],
       transcript: [
-        { role: "cliente", text: "Prefiero que me atienda una persona, quiero hablar con un humano" },
+        { role: "cliente", text: "Prefiero que me atienda un asesor o director humano directamente" },
         { role: "agente", text: "(handoff: la conversación pasó a atención humana)" },
       ],
     },
@@ -351,8 +387,8 @@ export async function seedDemo(
       veredicto: "verde",
       hallazgos: [],
       transcript: [
-        { role: "cliente", text: "ke onda, si benden pintura?" },
-        { role: "agente", text: "¡Claro! Manejamos Comex y Berel. ¿Qué necesitas pintar?" },
+        { role: "cliente", text: "ke onda, si asen bots de ia para wats?" },
+        { role: "agente", text: "¡Qué tal! Sí, diseñamos agentes inteligentes para WhatsApp que entienden a tus clientes y cotizan en automático. ¿Para qué giro de negocio lo necesitas?" },
       ],
     },
   ];

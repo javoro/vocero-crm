@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import type { SourceValue, StageDto } from "@/lib/types";
@@ -119,7 +119,7 @@ export function NewContactDialog({
               id="nc-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Ferretería La Central"
+              placeholder="Empresa o Nombre del contacto"
             />
           </div>
 
