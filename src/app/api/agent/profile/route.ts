@@ -47,31 +47,31 @@ const putSchema = z.object({
     .string()
     .max(100)
     .optional()
-    .transform((v) => (v && v.trim().length > 0 ? v.trim() : "Asistente")),
+    .transform((v) => (v === undefined ? undefined : v.trim() || "Agentia | Asistente")),
   tone: z
     .string()
     .max(1000)
     .nullable()
     .optional()
-    .transform((v) => (v && v.trim().length > 0 ? v.trim() : null)),
+    .transform((v) => (v === undefined ? undefined : v && v.trim().length > 0 ? v.trim() : null)),
   instructions: z
     .string()
     .max(12000)
     .nullable()
     .optional()
-    .transform((v) => (v && v.trim().length > 0 ? v.trim() : null)),
+    .transform((v) => (v === undefined ? undefined : v && v.trim().length > 0 ? v.trim() : null)),
   escalationRules: z
     .string()
     .max(6000)
     .nullable()
     .optional()
-    .transform((v) => (v && v.trim().length > 0 ? v.trim() : null)),
+    .transform((v) => (v === undefined ? undefined : v && v.trim().length > 0 ? v.trim() : null)),
   greeting: z
     .string()
     .max(2000)
     .nullable()
     .optional()
-    .transform((v) => (v && v.trim().length > 0 ? v.trim() : null)),
+    .transform((v) => (v === undefined ? undefined : v && v.trim().length > 0 ? v.trim() : null)),
 });
 
 export const PUT = withAuth(async (session, req: Request) => {
@@ -85,16 +85,24 @@ export const PUT = withAuth(async (session, req: Request) => {
     .where(scoped(schema.agentProfile.organizationId, session.organizationId))
     .limit(1);
 
+  const patch: Record<string, unknown> = { updatedAt: new Date() };
+  if (body.data.enabled !== undefined) patch.enabled = body.data.enabled;
+  if (body.data.name !== undefined) patch.name = body.data.name;
+  if (body.data.tone !== undefined) patch.tone = body.data.tone;
+  if (body.data.instructions !== undefined) patch.instructions = body.data.instructions;
+  if (body.data.escalationRules !== undefined) patch.escalationRules = body.data.escalationRules;
+  if (body.data.greeting !== undefined) patch.greeting = body.data.greeting;
+
   if (existing[0]) {
     await db
       .update(schema.agentProfile)
-      .set({ ...body.data, updatedAt: new Date() })
+      .set(patch)
       .where(scoped(schema.agentProfile.organizationId, session.organizationId));
   } else {
     await db.insert(schema.agentProfile).values({
       id: newId("agentProfile"),
       organizationId: session.organizationId,
-      name: body.data.name ?? "Asistente",
+      name: body.data.name ?? "Agentia | Asistente",
       tone: body.data.tone ?? null,
       instructions: body.data.instructions ?? null,
       escalationRules: body.data.escalationRules ?? null,
